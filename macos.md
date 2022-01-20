@@ -9,3 +9,6 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 )
 ```
 
+# Codesign
+1、首先需要一份developer id证书
+2、codesign -o runtime -f -s "cert name" -v ${_install_excutable_path} --deep
