@@ -2,6 +2,7 @@
 ```
 #ifndef TESTS_APP_DUMP_H_
 #define TESTS_APP_DUMP_H_
+#include <windows.h>
 
 #include <DbgHelp.h>
 #include "extension/file_util/path_util.h"
