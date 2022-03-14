@@ -18,3 +18,8 @@ class Stack {
   }
 }
 ```
+
+## functions which are not called in a class template will not be instantiated
+So you can use part of a class template, it saves space and time.
+It is OK that the template argument doesn't fit in everyting, if you dont use the unfitted ones.
+
