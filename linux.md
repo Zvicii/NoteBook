@@ -23,9 +23,9 @@ Press  to keep the current choice[*], or type selection number:
 # link order is very strict under gcc
 for example, cmake target A depends on zlib, the following cmake script works fine:
 ```cmake
-target_link_libraries(${TARGET_NAME} z A)
+target_link_libraries(${TARGET_NAME} A z)
 ```
 however, if you put A before z, target A will result in undefined syntax error:
 ```cmake
-target_link_libraries(${TARGET_NAME} A z) # will fail
+target_link_libraries(${TARGET_NAME} z A) # will fail
 ```
