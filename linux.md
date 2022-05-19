@@ -19,3 +19,13 @@ There are 3 choices for the alternative gcc (providing /usr/bin/gcc).
   3            /usr/bin/gcc-9   9         manual mode
 Press  to keep the current choice[*], or type selection number: 
 ```
+
+# link order is very strict under gcc
+for example, cmake target A depends on zlib, the following cmake script works fine:
+```cmake
+target_link_libraries(${TARGET_NAME} z A)
+```
+however, if you put A before z, target A will result in undefined syntax error:
+```cmake
+target_link_libraries(${TARGET_NAME} A z) # will fail
+```
