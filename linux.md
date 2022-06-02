@@ -29,3 +29,12 @@ however, if you put A before z, target A will result in undefined syntax error:
 ```cmake
 target_link_libraries(${TARGET_NAME} z A) # will fail
 ```
+
+# hide symbols using gcc
+There is no point to use the following symbols in static libraries, just use them in excutables and sharead libraries.
+```cmake
+add_link_options("LINKER:--exclude-libs,ALL") # hide symbols from all static library
+set(CMAKE_CUDA_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+```
