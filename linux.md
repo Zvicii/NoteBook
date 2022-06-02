@@ -38,3 +38,8 @@ set(CMAKE_CUDA_VISIBILITY_PRESET hidden)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_VISIBILITY_PRESET hidden)
 ```
+
+# get shared library exported symbols
+```
+nm -D *.so | awk '{if($2=="T"){print $3}}'
+```
