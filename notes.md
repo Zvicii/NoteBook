@@ -183,9 +183,13 @@ There is no point to hide symbols from static libraries, just use them on sharea
 ```cmake
 # linux or maxOS
 add_compile_options(-fvisibility=hidden) 
-# this option only affect the current target. So you have to add this compile option to every libraries, static or dynamic, in order to hide symbols you dont want to export.
+# this option only affect the current target. 
+# So you have to add this compile option to every libraries, static or dynamic, 
+# in order to hide symbols you dont want to export.
 
-# under linux there is a handy `exclude-lib` link option to hide symbols imported from static libraries, so its ok not adding `-fvisibility=hidden` option to static libraries under linux, just exclude them when linking the final dynamic library.
+# under linux there is a handy `exclude-lib` link option to hide symbols imported from static libraries, 
+# so its ok not adding `-fvisibility=hidden` option to static libraries under linux, 
+# just exclude them when linking the final dynamic library.
 add_link_options("LINKER:--exclude-libs,ALL")
 ```
 
