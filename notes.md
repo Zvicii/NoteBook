@@ -181,16 +181,22 @@ target_link_libraries(${TARGET_NAME} z A) # will fail
 There is no point to hide symbols from static libraries, just use them on sharead libraries.
 
 ```cmake
-add_link_options("LINKER:--exclude-libs,ALL") # hide symbols from all static library
-set(CMAKE_CUDA_VISIBILITY_PRESET hidden)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_C_VISIBILITY_PRESET hidden)
+// linux
+add_link_options("LINKER:--exclude-libs,ALL") # hide symbols from imported static library
+add_compile_options(-fvisibility=hidden) 
+
+// maxOS
+add_compile_options(-fvisibility=hidden) 
+# this option only affect current target. so this means every libraries should add this compile option, include imported static libs.
 ```
 
 # get shared library exported symbols
 
 ```
+// linux
 nm -D *.so | awk '{if($2=="T"){print $3}}'
+// macOS
+nm -g *.so | awk '{if($2=="T"){print $3}}'
 ```
 
 # Debug File Formats On Different Platforms
