@@ -191,6 +191,15 @@ add_compile_options(-fvisibility=hidden)
 # so its ok not adding `-fvisibility=hidden` option to static libraries under linux, 
 # just exclude them when linking the final dynamic library.
 add_link_options("LINKER:--exclude-libs,ALL")
+
+# so we can use the following script
+if(UNIX)
+    if(NOT APPLE)
+        add_link_options("LINKER:--exclude-libs,ALL" "LINKER:--as-needed")
+        set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    endif()
+    add_compile_options(-fvisibility=hidden)
+endif()
 ```
 
 # get shared library exported symbols
