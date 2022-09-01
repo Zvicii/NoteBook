@@ -1,5 +1,4 @@
 - [Windows auto generate dump upon crash](#windows-auto-generate-dump-upon-crash)
-- [VSCode launch setting of debugging node addon through mocha test](#vscode-launch-setting-of-debugging-node-addon-through-mocha-test)
 - [RPATH under macosx](#rpath-under-macosx)
 - [macOS Codesign](#macos-codesign)
 - [Multiple gcc/g++ version control](#multiple-gccg-version-control)
@@ -87,27 +86,6 @@ int main(int argc, char* argv[]) {
     ::SetUnhandledExceptionFilter(MyUnhandledExceptionFilter);
     return 0;
 }
-```
-
-# VSCode launch setting of debugging node addon through mocha test
-
-```
-{
-    "name": "msvc launch",
-    "type": "cppvsdbg",
-    "request": "launch",
-    "program": "node",
-    "args": [
-        "${workspaceFolder}/node_modules/mocha/bin/mocha",
-        "${workspaceFolder}/test/test_all.js",
-        "-slow",
-        "200",
-        "-timeout",
-        "5000"
-    ],
-    "cwd": "${workspaceFolder}",
-    "console": "integratedTerminal"
-},
 ```
 
 # RPATH under macosx
