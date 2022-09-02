@@ -137,7 +137,7 @@ There are 3 choices for the alternative gcc (providing /usr/bin/gcc).
   1            /usr/bin/gcc-7   7         manual mode
 * 2            /usr/bin/gcc-8   8         manual mode
   3            /usr/bin/gcc-9   9         manual mode
-Press  to keep the current choice[*], or type selection number:
+Press <enter> to keep the current choice[*], or type selection number:
 ```
 
 # link order is very strict under gcc
