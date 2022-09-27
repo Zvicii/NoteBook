@@ -6,6 +6,7 @@
 - [hide libraries symbols](#hide-libraries-symbols)
 - [get shared library exported symbols](#get-shared-library-exported-symbols)
 - [Debug File Formats On Different Platforms](#debug-file-formats-on-different-platforms)
+- [Check existence of member function or variable](#check-existence-of-member-function-or-variable)
 
 # Windows auto generate dump upon crash
 
@@ -192,3 +193,21 @@ nm -g *.so | awk '{if($2=="T"){print $3}}'
 # Debug File Formats On Different Platforms
 
 https://docs.sentry.io/platforms/native/guides/crashpad/data-management/debug-files/file-formats/
+
+# Check existence of member function or variable
+```c++
+#define define_has_member(member_name)                                        \
+    template <typename T>                                                     \
+    class has_member_##member_name {                                          \
+        typedef char yes_type;                                                \
+        typedef long no_type;                                                 \
+        template <typename U>                                                 \
+        static yes_type test(decltype(&U::member_name));                      \
+        template <typename U>                                                 \
+        static no_type test(...);                                             \
+                                                                              \
+    public:                                                                   \
+        static constexpr bool value = sizeof(test<T>(0)) == sizeof(yes_type); \
+    }
+#define has_member(class_, member_name) has_member_##member_name<class_>::value
+```
