@@ -7,6 +7,7 @@
 - [get shared library exported symbols](#get-shared-library-exported-symbols)
 - [Debug File Formats On Different Platforms](#debug-file-formats-on-different-platforms)
 - [Check existence of member function or variable](#check-existence-of-member-function-or-variable)
+- [Check gcc include path](#check-gcc-include-path)
 
 # Windows auto generate dump upon crash
 
@@ -210,4 +211,10 @@ https://docs.sentry.io/platforms/native/guides/crashpad/data-management/debug-fi
         static constexpr bool value = sizeof(test<T>(0)) == sizeof(yes_type); \
     }
 #define has_member(class_, member_name) has_member_##member_name<class_>::value
+```
+
+# Check gcc include path
+```
+gcc -xc -E -v -
+gcc -xc++ -E -v -
 ```
