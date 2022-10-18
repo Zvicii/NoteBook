@@ -8,6 +8,7 @@
 - [Debug File Formats On Different Platforms](#debug-file-formats-on-different-platforms)
 - [Check existence of member function or variable](#check-existence-of-member-function-or-variable)
 - [Check gcc include path](#check-gcc-include-path)
+- [Linux iterate over files and process them](#linux-iterate-over-files-and-process-them)
 
 # Windows auto generate dump upon crash
 
@@ -162,13 +163,13 @@ There is no point to hide symbols from static libraries, just use them on sharea
 
 ```cmake
 # linux or maxOS
-add_compile_options(-fvisibility=hidden) 
-# this option only affect the current target. 
-# So you have to add this compile option to every libraries, static or dynamic, 
+add_compile_options(-fvisibility=hidden)
+# this option only affect the current target.
+# So you have to add this compile option to every libraries, static or dynamic,
 # in order to hide symbols you dont want to export.
 
-# under linux there is a handy `exclude-lib` link option to hide symbols imported from static libraries, 
-# so its ok not adding `-fvisibility=hidden` option to static libraries under linux, 
+# under linux there is a handy `exclude-lib` link option to hide symbols imported from static libraries,
+# so its ok not adding `-fvisibility=hidden` option to static libraries under linux,
 # just exclude them when linking the final dynamic library.
 add_link_options("LINKER:--exclude-libs,ALL")
 
@@ -196,6 +197,7 @@ nm -g *.so | awk '{if($2=="T"){print $3}}'
 https://docs.sentry.io/platforms/native/guides/crashpad/data-management/debug-files/file-formats/
 
 # Check existence of member function or variable
+
 ```c++
 #define define_has_member(member_name)                                        \
     template <typename T>                                                     \
@@ -214,7 +216,17 @@ https://docs.sentry.io/platforms/native/guides/crashpad/data-management/debug-fi
 ```
 
 # Check gcc include path
+
 ```
 gcc -xc -E -v -
 gcc -xc++ -E -v -
+```
+
+# Linux iterate over files and process them
+
+```bash
+# 1
+find . -name "*.txt" -exec bash -c 'echo "Processing {}";' \;
+# 2
+for i in *; do echo "Processing $i"; done
 ```
