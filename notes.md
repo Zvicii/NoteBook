@@ -9,6 +9,8 @@
 - [Check existence of member function or variable](#check-existence-of-member-function-or-variable)
 - [Check gcc include path](#check-gcc-include-path)
 - [Linux iterate over files and process them](#linux-iterate-over-files-and-process-them)
+- [static link libstdc++](#static-link-libstdc)
+- [static link libc++](#static-link-libc)
 
 # Windows auto generate dump upon crash
 
@@ -229,4 +231,16 @@ gcc -xc++ -E -v -
 find . -name "*.txt" -exec bash -c 'echo "Processing {}";' \;
 # 2
 for i in *; do echo "Processing $i"; done
+```
+
+# static link libstdc++
+
+```
+target_link_options(${TARGET_NAME} PRIVATE -static-libgcc -static-libstdc++)
+```
+
+# static link libc++
+
+```
+target_link_options(${TARGET_NAME} PRIVATE -static -lc++abi)
 ```
