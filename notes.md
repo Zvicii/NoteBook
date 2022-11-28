@@ -11,6 +11,7 @@
 - [Linux iterate over files and process them](#linux-iterate-over-files-and-process-them)
 - [static link libstdc++](#static-link-libstdc)
 - [static link libc++](#static-link-libc)
+- [cmake build framework](#cmake-build-framework)
 
 # Windows auto generate dump upon crash
 
@@ -243,4 +244,25 @@ target_link_options(${TARGET_NAME} PRIVATE -static-libgcc -static-libstdc++)
 
 ```
 target_link_options(${TARGET_NAME} PRIVATE -static -lc++abi)
+```
+
+# cmake build framework
+
+```
+add_library(dynamicFramework SHARED
+            dynamicFramework.c
+            dynamicFramework.h
+)
+set_target_properties(dynamicFramework PROPERTIES
+  FRAMEWORK TRUE
+  FRAMEWORK_VERSION A
+  MACOSX_FRAMEWORK_IDENTIFIER com.cmake.dynamicFramework
+  MACOSX_FRAMEWORK_INFO_PLIST Info.plist
+  # "current version" in semantic format in Mach-O binary file
+  VERSION 16.4.0
+  # "compatibility version" in semantic format in Mach-O binary file
+  SOVERSION 1.0.0
+  PUBLIC_HEADER dynamicFramework.h
+  XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
+)
 ```
