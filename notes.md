@@ -97,15 +97,15 @@ int main(int argc, char* argv[]) {
 # RPATH under macosx
 
 最佳实践：  
-1、所有的动态库 install_name 都设置为@rpath (cmake 已默认配置，所以不需要再配置INSTALL_NAME_DIR property, 见https://cmake.org/cmake/help/latest/prop_tgt/MACOSX_RPATH.html#prop_tgt:MACOSX_RPATH)
-2、所有的动态库 rpath 都设置为@rpath;@loader_path
+1、所有的动态库 INSTALL_NAME_DIR 都设置为@rpath (cmake 已默认配置，所以不需要再显式配置INSTALL_NAME_DIR property, 见https://cmake.org/cmake/help/latest/prop_tgt/MACOSX_RPATH.html#prop_tgt:MACOSX_RPATH)  
+2、所有的动态库 INSTALL_RPATH 都设置为@loader_path (注意, 不要在INSTALL_RPATH中配置@rpath)
 ```
 set_target_properties(${TARGET_NAME} PROPERTIES
   BUILD_WITH_INSTALL_RPATH ON
-  INSTALL_RPATH "@rpath;@loader_path"
+  INSTALL_RPATH "@loader_path"
 )
 ```
-3、可执行文件的 rpath 设为其所要查找的目录，比如@loader_path;@loader_path/../Frameworks
+3、可执行文件的 INSTALL_RPATH 设为其所要查找的目录, 比如@loader_path;@loader_path/../Frameworks
 
 ```
 set_target_properties(${TARGET_NAME} PROPERTIES
