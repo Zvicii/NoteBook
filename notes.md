@@ -160,6 +160,14 @@ however, if you put A before z, target A will result in undefined syntax error:
 target_link_libraries(${TARGET_NAME} z A) # will fail
 ```
 
+you can use link group to avoid worrying about link order
+
+```
+target_link_libraries(${PROJECT_NAME} -Wl,--start-group)
+target_link_libraries(${TARGET_NAME} z A)
+target_link_libraries(${PROJECT_NAME} -Wl,--end-group)
+```
+
 # hide libraries symbols
 
 There is no point to hide symbols from static libraries, just use them on sharead libraries.
