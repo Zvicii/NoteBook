@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 
 最佳实践：  
 1、所有的动态库 INSTALL_NAME_DIR 都设置为@rpath (cmake 已默认配置，所以不需要再显式配置INSTALL_NAME_DIR property, 见https://cmake.org/cmake/help/latest/prop_tgt/MACOSX_RPATH.html#prop_tgt:MACOSX_RPATH)  
-2、可执行文件和动态库的 INSTALL_RPATH 设为其所要查找的目录, 比如@loader_path;@loader_path/../Frameworks(注意, 不要在INSTALL_RPATH中配置@rpath)
+2、可执行文件和动态库的 INSTALL_RPATH 设为其所要查找的目录, 比如@loader_path;@loader_path/../Frameworks(注意, 不要在INSTALL_RPATH中配置@rpath, ld会在加载动态库时自动添加@rpath, 如果@rpath为空, 又在INSTALL_RPATH中添加了@rpath会导致路径解析失败)
 
 ```
 set_target_properties(${TARGET_NAME} PROPERTIES
