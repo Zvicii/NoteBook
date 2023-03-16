@@ -109,8 +109,8 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 
 # macOS Codesign
 
-1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话 p12 和 cer都要（前者是密钥，后者是证书）
-2、`codesign --timestamp -o runtime -f -s "cert name" -v ${\_install_excutable_path} --deep`
+1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话 p12 和 cer都要（前者是密钥，后者是证书）  
+2、`codesign --timestamp -o runtime -f -s "cert name" -v ${\_install_excutable_path} --deep`  
 3、`security find-identity -p codesigning` 查看可用证书
 
 若 cmake generator 为 xcode 则无需显式调用 codesign, 如果生成的是 bundle 则需要加上--deep 参数
