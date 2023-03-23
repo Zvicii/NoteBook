@@ -13,8 +13,15 @@
 - [static link libc++](#static-link-libc)
 - [cmake build framework](#cmake-build-framework)
 
-# Windows auto generate dump upon crash
+# Windows capture dump upon crash
+## bat script auto generate
+https://github.com/Zvicii/NoteBook/blob/main/enable_full_memory_dump.bat
 
+## ProcDump
+https://learn.microsoft.com/zh-cn/sysinternals/downloads/procdump  
+```procdump -e -x path/to/save/dump process_to_start process_parameters```
+
+## code into app
 ```
 #ifndef TESTS_APP_DUMP_H_
 #define TESTS_APP_DUMP_H_
@@ -94,8 +101,6 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-## ProcDump
-https://learn.microsoft.com/zh-cn/sysinternals/downloads/procdump
 # RPATH under macosx
 
 最佳实践：  
