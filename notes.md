@@ -16,9 +16,11 @@
 # Windows capture dump upon crash
 ## bat script auto generate
 https://github.com/Zvicii/NoteBook/blob/main/enable_full_memory_dump.bat
+执行这个bat脚本，崩溃时crash会生成在脚本中指定的目录
 
 ## ProcDump
 https://learn.microsoft.com/zh-cn/sysinternals/downloads/procdump  
+使用示例：
 ```procdump -e -x path/to/save/dump process_to_start process_parameters```
 
 ## code into app
