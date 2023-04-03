@@ -289,3 +289,8 @@ set_target_properties(dynamicFramework PROPERTIES
   XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
 )
 ```
+# check if exe/dll matches pdb
+https://www.debuginfo.com/tools/chkmatch.html
+```
+ChkMatch -c lib.dll lib.pdb
+```
