@@ -1,4 +1,7 @@
-- [Windows auto generate dump upon crash](#windows-auto-generate-dump-upon-crash)
+- [Windows capture dump upon crash](#windows-capture-dump-upon-crash)
+  - [bat script auto generate](#bat-script-auto-generate)
+  - [ProcDump](#procdump)
+  - [code into app](#code-into-app)
 - [RPATH under macosx](#rpath-under-macosx)
 - [macOS Codesign](#macos-codesign)
 - [Multiple gcc/g++ version control](#multiple-gccg-version-control)
@@ -12,6 +15,7 @@
 - [static link libstdc++](#static-link-libstdc)
 - [static link libc++](#static-link-libc)
 - [cmake build framework](#cmake-build-framework)
+- [check if exe/dll matches pdb](#check-if-exedll-matches-pdb)
 
 # Windows capture dump upon crash
 ## bat script auto generate
