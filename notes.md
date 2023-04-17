@@ -16,18 +16,23 @@
 - [static link libc++](#static-link-libc)
 - [cmake build framework](#cmake-build-framework)
 - [check if exe/dll matches pdb](#check-if-exedll-matches-pdb)
+- [proxmox macOS VM config example](#proxmox-macos-vm-config-example)
 
 # Windows capture dump upon crash
+
 ## bat script auto generate
+
 https://github.com/Zvicii/NoteBook/blob/main/enable_full_memory_dump.bat  
-执行这个bat脚本，崩溃时crash会生成在脚本中指定的目录
+执行这个 bat 脚本，崩溃时 crash 会生成在脚本中指定的目录
 
 ## ProcDump
+
 https://learn.microsoft.com/zh-cn/sysinternals/downloads/procdump  
 使用示例：
-```procdump -e -x path/to/save/dump process_to_start process_parameters```
+`procdump -e -x path/to/save/dump process_to_start process_parameters`
 
 ## code into app
+
 ```
 #ifndef TESTS_APP_DUMP_H_
 #define TESTS_APP_DUMP_H_
@@ -110,8 +115,8 @@ int main(int argc, char* argv[]) {
 # RPATH under macosx
 
 最佳实践：  
-1、所有的动态库 INSTALL_NAME_DIR 都设置为@rpath (cmake 已默认配置，所以不需要再显式配置INSTALL_NAME_DIR property, 见https://cmake.org/cmake/help/latest/prop_tgt/MACOSX_RPATH.html#prop_tgt:MACOSX_RPATH)  
-2、可执行文件和动态库的 INSTALL_RPATH 设为其所要查找的目录, 比如@loader_path;@loader_path/../Frameworks(注意, 不要在INSTALL_RPATH中配置@rpath, ld会在加载动态库时自动添加@rpath, 如果@rpath为空, 又在INSTALL_RPATH中添加了@rpath会导致路径解析失败)
+1、所有的动态库 INSTALL_NAME_DIR 都设置为@rpath (cmake 已默认配置，所以不需要再显式配置 INSTALL_NAME_DIR property, 见https://cmake.org/cmake/help/latest/prop_tgt/MACOSX_RPATH.html#prop_tgt:MACOSX_RPATH)  
+2、可执行文件和动态库的 INSTALL_RPATH 设为其所要查找的目录, 比如@loader_path;@loader_path/../Frameworks(注意, 不要在 INSTALL_RPATH 中配置@rpath, ld 会在加载动态库时自动添加@rpath, 如果@rpath 为空, 又在 INSTALL_RPATH 中添加了@rpath 会导致路径解析失败)
 
 ```
 set_target_properties(${TARGET_NAME} PROPERTIES
@@ -122,7 +127,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 
 # macOS Codesign
 
-1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话 p12 和 cer都要（前者是密钥，后者是证书）  
+1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话 p12 和 cer 都要（前者是密钥，后者是证书）  
 2、`codesign --timestamp -o runtime -f -s "cert name" -v ${\_install_excutable_path} --deep`  
 3、`security find-identity -p codesigning` 查看可用证书
 
@@ -136,11 +141,12 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         XCODE_ATTRIBUTE_OTHER_CODE_SIGN_FLAGS "--deep"
     )
 ```
+
 note:  
 1、所有证书的信任要设置成系统默认，如果改成始终信任会导致 `unable to build chain to self-signed root`  
 2、Apple WWDRCA 版本要和签发你证书的版本匹配，看证书的签发者名称-组织单位栏，https://www.apple.com/certificateauthority/  
 3、Apple WWDRCA 证书一定要放在系统证书不能放在登录证书  
-4、将开发者证书放在登录证书中，右键登录可以更改钥匙串"登录"，把两个锁定条件关掉就不会锁定了  
+4、将开发者证书放在登录证书中，右键登录可以更改钥匙串"登录"，把两个锁定条件关掉就不会锁定了
 
 # Multiple gcc/g++ version control
 
@@ -293,8 +299,37 @@ set_target_properties(dynamicFramework PROPERTIES
   XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
 )
 ```
+
 # check if exe/dll matches pdb
+
 https://www.debuginfo.com/tools/chkmatch.html
+
 ```
 ChkMatch -c lib.dll lib.pdb
+```
+
+# proxmox macOS VM config example
+
+```
+agent: 1
+args: -device isa-applesmc,osk="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc" -smbios type=2 -device usb-kbd,bus=ehci.0,port=2 -cpu host,kvm=on,vendor=GenuineIntel,+kvm_pv_unhalt,+kvm_pv_eoi,+hypervisor,+invtsc
+balloon: 0
+bios: ovmf
+bootdisk: ide2
+cores: 32
+ide0: local:iso/BigSur-full.img,cache=unsafe,size=14G
+ide2: local:iso/OpenCore-v10.iso,cache=unsafe
+machine: q35
+memory: 32768
+name: macOS-NeIM-02
+net0: vmxnet3=FE:34:E3:AB:33:AB,bridge=vmbr0
+numa: 0
+onboot: 1
+ostype: other
+scsihw: virtio-scsi-pci
+smbios1: uuid=aae83434-76bc-4585-971f-0d4a3a7326c7
+sockets: 1
+vga: vmware
+virtio0: ssd002:vm-150-disk-0,cache=unsafe,discard=on,size=700G
+vmgenid: d039aac7-9130-4f31-8755-a7719e8ee80e
 ```
