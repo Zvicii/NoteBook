@@ -143,9 +143,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 ```
 
 note:  
-1、Apple WWDRCA 版本要和签发你证书的版本匹配，看证书的签发者名称-组织单位栏，https://www.apple.com/certificateauthority/  
-2、Apple WWDRCA 证书一定要放在系统证书不能放在登录证书  
-3、将开发者证书放在登录证书中，右键登录可以更改钥匙串"登录"，把两个锁定条件关掉就不会锁定了
+1、所有证书的信任要设置成系统默认，如果改成始终信任会导致 `unable to build chain to self-signed root`  
+2、Apple WWDRCA 版本要和签发你证书的版本匹配，看证书的签发者名称-组织单位栏，https://www.apple.com/certificateauthority/  
+3、Apple WWDRCA 证书一定要放在系统证书不能放在登录证书  
+4、将开发者证书放在登录证书中，右键登录可以更改钥匙串"登录"，把两个锁定条件关掉就不会锁定了
 
 # Multiple gcc/g++ version control
 
