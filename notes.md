@@ -127,7 +127,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 
 # macOS Codesign
 
-1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话 p12 和 cer 都要（前者是密钥，后者是证书）  
+1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话, 要用p12格式导出 
 2、`codesign --timestamp -o runtime -f -s "cert name" -v ${\_install_excutable_path} --deep`  
 3、`security find-identity -p codesigning` 查看可用证书
 
@@ -143,10 +143,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 ```
 
 note:  
-1、所有证书的信任要设置成系统默认，如果改成始终信任会导致 `unable to build chain to self-signed root`  
-2、Apple WWDRCA 版本要和签发你证书的版本匹配，看证书的签发者名称-组织单位栏，https://www.apple.com/certificateauthority/  
-3、Apple WWDRCA 证书一定要放在系统证书不能放在登录证书  
-4、将开发者证书放在登录证书中，右键登录可以更改钥匙串"登录"，把两个锁定条件关掉就不会锁定了
+1、Apple WWDRCA 版本要和签发你证书的版本匹配，看证书的签发者名称-组织单位栏，https://www.apple.com/certificateauthority/  
+2、Apple WWDRCA 证书一定要放在系统证书不能放在登录证书  
+3、将开发者证书放在登录证书中，右键登录可以更改钥匙串"登录"，把两个锁定条件关掉就不会锁定了
 
 # Multiple gcc/g++ version control
 
