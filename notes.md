@@ -2,6 +2,9 @@
   - [bat script auto generate](#bat-script-auto-generate)
   - [ProcDump](#procdump)
   - [code into app](#code-into-app)
+- [Linux capture core dump](#linux-capture-core-dump)
+  - [传统 gdb 调试](#传统-gdb-调试)
+  - [更现代的崩溃报告系统及调试](#更现代的崩溃报告系统及调试)
 - [RPATH under macosx](#rpath-under-macosx)
 - [macOS Codesign](#macos-codesign)
 - [Multiple gcc/g++ version control](#multiple-gccg-version-control)
@@ -112,6 +115,31 @@ int main(int argc, char* argv[]) {
 }
 ```
 
+# Linux capture core dump
+
+## 传统 gdb 调试
+
+要让系统生成 core 文件，需要做以下操作：  
+`ulimit -c unlimited （必选）`  
+设置 core 文件大小，unlimited 代表无穷大  
+临时的操作，当前 shell 生效，重启或新开终端无效，除非写到.bashrc 里  
+`sudo service apport stop` （必选）  
+关闭 ubuntu 系统崩溃上报，否则不会生成核心转储  
+临时的操作，重启失效，若要永久操作，需要修改`/etc/default/apport`，修改为 enabled=0  
+修改 core 文件样式 （可选）  
+不修改的话默认 core  
+`echo "core.%p.%e" > /proc/sys/kernel/core_pattern`, 具体命名规则详见 man 5 core
+
+## 更现代的崩溃报告系统及调试
+
+安装 systemd-coredump  
+`sudo apt install systemd-coredump`  
+core dumps 存储在/var/lib/systemd/coredump  
+客户端工具 `coredumpctl`  
+`coredumpctl` 【列出所有 core dumps】  
+`coredumpctl gdb` 【打开最近的 core dumps】  
+`coredumpctl gdb 1234`【打开 pid=1234 进程最近的 core dumps】
+
 # RPATH under macosx
 
 最佳实践：  
@@ -127,7 +155,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 
 # macOS Codesign
 
-1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话, 要用p12格式导出 
+1、首先需要一份 developer id 证书, 导出证书安装到别的设备的话, 要用 p12 格式导出
 2、`codesign --timestamp -o runtime -f -s "cert name" -v ${\_install_excutable_path} --deep`  
 3、`security find-identity -p codesigning` 查看可用证书
 
@@ -144,7 +172,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 note:  
 1、所有证书的信任要设置成系统默认，如果改成始终信任会导致 `unable to build chain to self-signed root`  
-2、如果信任已经是系统默认, 仍然提示 `unable to build chain to self-signed root`, 说明对应版本的Apple WWDRCA未安装
+2、如果信任已经是系统默认, 仍然提示 `unable to build chain to self-signed root`, 说明对应版本的 Apple WWDRCA 未安装
 2、Apple WWDRCA 版本要和签发你证书的版本匹配，看证书的签发者名称-组织单位栏，https://www.apple.com/certificateauthority/  
 3、Apple WWDRCA 证书一定要放在系统证书不能放在登录证书  
 4、将开发者证书放在登录证书中，右键登录可以更改钥匙串"登录"，把两个锁定条件关掉就不会锁定了
