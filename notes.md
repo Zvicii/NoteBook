@@ -20,6 +20,7 @@
 - [cmake build framework](#cmake-build-framework)
 - [check if exe/dll matches pdb](#check-if-exedll-matches-pdb)
 - [proxmox macOS VM config example](#proxmox-macos-vm-config-example)
+- [crashpad \& breakpad symbolicate](#crashpad--breakpad-symbolicate)
 
 # Windows capture dump upon crash
 
@@ -362,3 +363,7 @@ vga: vmware
 virtio0: ssd002:vm-150-disk-0,cache=unsafe,discard=on,size=700G
 vmgenid: d039aac7-9130-4f31-8755-a7719e8ee80e
 ```
+
+# crashpad & breakpad symbolicate
+https://github.com/mozilla/dump_syms
+https://github.com/rust-minidump/rust-minidump
